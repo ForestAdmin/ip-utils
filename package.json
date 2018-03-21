@@ -6,9 +6,11 @@
   "private": true,
   "scripts": {
     "lint": "./node_modules/eslint/bin/eslint.js src/; exit 0",
-    "test": "./node_modules/mocha/bin/mocha test/** --timeout 15000"
+    "test": "./node_modules/mocha/bin/mocha test/**",
+    "test:watch": "./node_modules/mocha/bin/mocha test/** src/** --watch"
   },
   "dependencies": {
+    "ip-address": "^5.8.9",
     "range_check": "^1.4.0"
   },
   "devDependencies": {
