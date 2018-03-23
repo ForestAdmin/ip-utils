@@ -1,10 +1,11 @@
 {
   "name": "ip-utils",
   "version": "1.0.0",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "author": "Arnaud Valensi <arnaud.valensi@gmail.com>",
   "private": true,
   "scripts": {
+    "build": "./node_modules/babel-cli/bin/babel.js src --out-dir dist",
     "lint": "./node_modules/eslint/bin/eslint.js src/; exit 0",
     "test": "./node_modules/mocha/bin/mocha test/**",
     "test:watch": "./node_modules/mocha/bin/mocha test/** src/** --watch"
@@ -14,6 +15,9 @@
     "range_check": "^1.4.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
     "eslint": "^4.19.0",
     "eslint-config-airbnb-base": "^12.1.0",
