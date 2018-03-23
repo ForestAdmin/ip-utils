@@ -1,9 +1,9 @@
 const rangeCheck = require('range_check');
 const { Address6 } = require('ip-address');
 
-const IP_TYPE = 0;
-const RANGE_TYPE = 1;
-const SUBNET_TYPE = 2;
+const TYPE_IP = 0;
+const TYPE_RANGE = 1;
+const TYPE_SUBNET = 2;
 
 // NOTICE: Since IPs are 4 bytes, they can be converted to integers to be compared.
 function ipV4ToInt(ip) {
@@ -25,7 +25,7 @@ function processIP(rule) {
     return {
       isValid: true,
       rule: {
-        type: IP_TYPE,
+        type: TYPE_IP,
         ip: normalizedIp,
       },
     };
@@ -91,7 +91,7 @@ function processRange(rule) {
   return {
     isValid: true,
     rule: {
-      type: RANGE_TYPE,
+      type: TYPE_RANGE,
       ipMinimum: normalizedIp1,
       ipMaximum: normalizedIp2,
     },
@@ -139,7 +139,7 @@ function processSubnet(rule) {
   return {
     isValid: true,
     rule: {
-      type: SUBNET_TYPE,
+      type: TYPE_SUBNET,
       range: `${normalizedIp}/${mask}`,
     },
   };
@@ -169,9 +169,9 @@ function stringToRuleObject(ruleString) {
 function isIpMatchesRule(ip, rule) {
   const normalizedIp = rangeCheck.displayIP(ip);
 
-  if (rule.type === IP_TYPE) {
+  if (rule.type === TYPE_IP) {
     return normalizedIp === rule.ip;
-  } else if (rule.type === RANGE_TYPE) {
+  } else if (rule.type === TYPE_RANGE) {
     const ipVersion = rangeCheck.ver(normalizedIp);
     const rangeVersion = rangeCheck.ver(rule.ipMinimum);
 
@@ -192,7 +192,7 @@ function isIpMatchesRule(ip, rule) {
     const ipValue = ipV6ToBigInteger(normalizedIp);
 
     return ipValue.compareTo(ipValueMinimum) >= 0 && ipValue.compareTo(ipValueMaximum) <= 0;
-  } else if (rule.type === SUBNET_TYPE) {
+  } else if (rule.type === TYPE_SUBNET) {
     return rangeCheck.inRange(normalizedIp, rule.range);
   }
 
@@ -202,16 +202,13 @@ function isIpMatchesRule(ip, rule) {
 function contain(list, ip) {
   return list.some((rule) => {
     const ruleObject = stringToRuleObject(rule.value);
+    let matchFound = false;
 
-    if (ruleObject.isValid === false) {
-      throw new Error(`Invalid rule: ${ruleObject.reason}`, rule);
+    if (ruleObject.isValid) {
+      matchFound = isIpMatchesRule(ip, ruleObject.rule);
     }
 
-    if (isIpMatchesRule(ip, ruleObject.rule)) {
-      return true;
-    }
-
-    return false;
+    return matchFound;
   });
 }
 
