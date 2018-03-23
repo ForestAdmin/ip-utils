@@ -1,0 +1,23 @@
+{
+  "name": "ip-utils",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "author": "Arnaud Valensi <arnaud.valensi@gmail.com>",
+  "private": true,
+  "scripts": {
+    "lint": "./node_modules/eslint/bin/eslint.js src/; exit 0",
+    "test": "./node_modules/mocha/bin/mocha test/**",
+    "test:watch": "./node_modules/mocha/bin/mocha test/** src/** --watch"
+  },
+  "dependencies": {
+    "ip-address": "^5.8.9",
+    "range_check": "^1.4.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.19.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "mocha": "^5.0.4"
+  }
+}
