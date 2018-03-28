@@ -225,5 +225,6 @@ function contain(list, ip) {
 
 module.exports = {
   checkRule: stringToRuleObject,
-  contain: contain
+  contain: contain,
+  isIpMatchesRule: isIpMatchesRule
 };
