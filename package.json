@@ -1,6 +1,6 @@
 {
   "name": "forest-ip-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "author": "Arnaud Valensi <arnaud.valensi@gmail.com>",
   "license": "MIT",
