@@ -1,5 +1,5 @@
 {
-  "name": "ip-utils",
+  "name": "forest-ip-utils",
   "version": "1.0.0",
   "main": "dist/index.js",
   "author": "Arnaud Valensi <arnaud.valensi@gmail.com>",
