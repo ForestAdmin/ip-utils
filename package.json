@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "author": "Arnaud Valensi <arnaud.valensi@gmail.com>",
+  "license": "MIT",
   "scripts": {
     "build": "./node_modules/babel-cli/bin/babel.js src --out-dir dist",
     "lint": "./node_modules/eslint/bin/eslint.js src/; exit 0",
