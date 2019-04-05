@@ -7,6 +7,7 @@
   "scripts": {
     "build": "./node_modules/babel-cli/bin/babel.js src --out-dir dist",
     "lint": "./node_modules/eslint/bin/eslint.js src/; exit 0",
+    "publish": "npm run build && npm publish",
     "test": "./node_modules/mocha/bin/mocha test/**",
     "test:watch": "./node_modules/mocha/bin/mocha test/** src/** --watch"
   },
