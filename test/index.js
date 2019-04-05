@@ -75,6 +75,14 @@ describe('Utils > IP Utils', () => {
       });
     });
 
+    describe('with a valid range "10.0.0.0 - 10.0.255.255"', () => {
+      it('should return true', () => {
+        const { isValid } = ipUtil.checkRule('10.0.0.0 - 10.0.255.255');
+
+        expect(isValid).to.be.true;
+      });
+    });
+
     describe('with a valid range "2001:0000:0000:0000:0000:0000:0000:0001-2001:0000:0000:0000:0000:0000:0000:0002"', () => {
       it('should return true', () => {
         const { isValid } = ipUtil.checkRule('2001:0000:0000:0000:0000:0000:0000:0001-2001:0000:0000:0000:0000:0000:0000:0002');
@@ -221,6 +229,44 @@ describe('Utils > IP Utils', () => {
     });
   });
 
+  describe('Check isIpMatchesRule function', () => {
+    it('With range "90.88.0.0 - 90.88.255.255"', () => {
+      const rule = {
+        type: 1,
+        ipMinimum: '90.88.0.0',
+        ipMaximum: '90.88.255.255',
+      };
+
+      const isMatching = ipUtil.isIpMatchesRule('90.88.118.79', rule);
+
+      expect(isMatching).to.be.true;
+    });
+
+    it('With range "90.88.0.1 - 90.88.255.255"', () => {
+      const rule = {
+        type: 1,
+        ipMinimum: '90.88.0.1',
+        ipMaximum: '90.88.255.255',
+      };
+
+      const isMatching = ipUtil.isIpMatchesRule('90.88.118.79', rule);
+
+      expect(isMatching).to.be.true;
+    });
+
+    it('With range "90.88.0.1 - 90.88.254.254"', () => {
+      const rule = {
+        type: 1,
+        ipMinimum: '90.88.0.1',
+        ipMaximum: '90.88.254.254',
+      };
+
+      const isMatching = ipUtil.isIpMatchesRule('90.88.118.79', rule);
+
+      expect(isMatching).to.be.true;
+    });
+  });
+
   describe('Check range inclusion', () => {
     const ipWhitelistRules = [
       {
@@ -230,6 +276,18 @@ describe('Utils > IP Utils', () => {
       {
         name: 'Work',
         value: '10.0.0.10 - 10.0.0.15',
+      },
+      {
+        name: 'Work',
+        value: '20.0.0.1 - 20.0.1.254',
+      },
+      {
+        name: 'Work',
+        value: '30.0.0.0 - 30.0.1.255',
+      },
+      {
+        name: 'Work',
+        value: '90.88.0.1 - 90.88.254.254',
       },
       {
         name: 'Work',
@@ -260,6 +318,30 @@ describe('Utils > IP Utils', () => {
     describe('with an IP "10.0.0.1" matching an IP rule', () => {
       it('should return true', () => {
         const isContained = ipUtil.contain(ipWhitelistRules, '10.0.0.1');
+
+        expect(isContained).to.be.true;
+      });
+    });
+
+    describe('with an IP "20.0.1.10" matching an IP rule', () => {
+      it('should return true', () => {
+        const isContained = ipUtil.contain(ipWhitelistRules, '20.0.1.10');
+
+        expect(isContained).to.be.true;
+      });
+    });
+
+    describe('with an IP "30.0.1.10" matching an IP rule', () => {
+      it('should return true', () => {
+        const isContained = ipUtil.contain(ipWhitelistRules, '30.0.1.10');
+
+        expect(isContained).to.be.true;
+      });
+    });
+
+    describe('with an IP "90.88.118.79" matching an IP rule', () => {
+      it('should return true', () => {
+        const isContained = ipUtil.contain(ipWhitelistRules, '90.88.118.79');
 
         expect(isContained).to.be.true;
       });
